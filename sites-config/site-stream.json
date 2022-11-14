@@ -1,0 +1,18 @@
+{
+  "$id": "site-entity",
+  "filter": {
+    "entityIds": ["layout"] 
+  },
+  "source": "knowledgeGraph",
+  "fields": [
+    "name",
+    "c_menu",
+    "c_footerFPB",
+    "c_listing"
+
+  ],
+  "localization": {
+    "locales": ["fr"],
+    "primary": false
+  }
+}
