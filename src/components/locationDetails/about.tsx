@@ -15,7 +15,14 @@ const About = (props: services) => {
             <h1 className="text-2xl text-[#001f46] mt-2">{c_aboutSection.title}</h1>
             <p className="mt-4 text-sm w-10/12">{c_aboutSection.description}</p>
             <div className="mt-4">
-              <a href="#">{c_aboutSection?.cta?.label}</a>
+
+              {c_aboutSection.cta?.label && c_aboutSection.cta?.link ? (
+                <a className="bg-[#001f46] text-white text-sm p-4 hover:bg-white border-solid border-2 border-[#001f46] hover:text-[#001f46] mt-4" href="c_aboutSection?.cta?.link">{c_aboutSection?.cta?.label}</a>
+              ) : (
+                <></>
+              )}
+
+              {/* <a href="#">{c_aboutSection?.cta?.label}</a> */}
             </div>
           </div>
           <div>

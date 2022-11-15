@@ -15,6 +15,7 @@ import Header from "../components/layouts/header";
 import Footer from "../components/layouts/footer";
 import CustomMap from "../components/locationDetails/CustomMap";
 import favicon from "../images/favicon.png";
+import bannerImage from "../images/francepare1.png";
 import IframeMap from "../components/locationDetails/dynamicMap";
 import BreadCrumbs from "../components/layouts/BreadCrumbs";
 import { useTranslation } from "react-i18next";
@@ -55,9 +56,6 @@ export const config: TemplateConfig = {
       "meta",
       "name",
       "c_menu",
-      "c_footerFPB",
-      // "c_primaryCTA",
-      "c_listing",
       "address",
       "mainPhone",
       "description",
@@ -66,6 +64,7 @@ export const config: TemplateConfig = {
       "c_title",
       "c_primaryCTA",
       "photoGallery",
+      "c_backgroundImage",
       "c_aboutSection",
       "c_bannerButton",
       "c_service",
@@ -278,8 +277,6 @@ const Location: Template<ExternalApiRenderData> = ({
     name,
     _site,
     c_menu,
-    c_footerFPB,
-    c_listing,
     address,
     description,
     neighborhood,
@@ -287,6 +284,7 @@ const Location: Template<ExternalApiRenderData> = ({
     hours,
     mainPhone,
     c_title,
+    c_backgroundImage,
     c_bannerButton,
     c_servicesfrance,
     c_primaryCTA,
@@ -322,7 +320,10 @@ const Location: Template<ExternalApiRenderData> = ({
           Name={name}
           TagLine={c_title}
           CtaButton={c_primaryCTA}
-          BackgroundImage={photoGallery?.image?.url}
+          // BackgroundImage={photoGallery?.image?.url}
+          BackgroundImage={
+            c_backgroundImage ? c_backgroundImage.url : bannerImage
+          }
         />
         <BreadCrumbs
           name={name}
@@ -375,7 +376,7 @@ const Location: Template<ExternalApiRenderData> = ({
         <div className="text-center mt-4 ">
           <Cta buttonText={c_bannerButton.label} url={c_bannerButton.link}></Cta>
         </div>
-        <Footer footerFPB={_site.c_footerFPB} />
+        {/* <Footer Footer={_site.c_footerFPB} /> */}
       {/* </PageLayout> */}
     </>
   );

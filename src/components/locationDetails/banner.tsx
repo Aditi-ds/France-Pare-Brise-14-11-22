@@ -30,7 +30,7 @@ const Banner = (Data: props) => {
     <>
       <div className="  container-fluid bg-gray-200 relative text-3xl font-bold text-black  flex items-center justify-center flex-col gap-x-14 gap-y-10 md:flex-row">
         <img
-          className="hero-img opacity-40 w-full container-fluid"
+          className="hero-img opacity-40 container-fluid"
           src={
             Data.BackgroundImage ? Data.BackgroundImage : bannerImage
           }
@@ -39,20 +39,53 @@ const Banner = (Data: props) => {
         <div className="container-fluid text-center absolute">
           <h3>{Data.Name ? Data.Name : ""}</h3>
           <p className="text-base mt-2">{Data.TagLine ? Data.TagLine : ""}</p>
+
           {Data.CtaButton ? (
+            <>
+              {Data.CtaButton.label && Data.CtaButton.link ? (
+                <div className="cta_btn">
+                  <Link
+                    rel="noopener noreferrer"
+                    conversionDetails={conversionDetails_primaryCTA}
+                    href={
+                      Data.CtaButton.linkType == "PHONE"
+                        ? `tel:${Data.CtaButton.link}`
+                        : Data.CtaButton.link
+                    }
+                    className="button"
+                    target={
+                      Data.CtaButton.linkType == "PHONE"
+                        ? "_self"
+                        : Data.CtaButton.link == "#"
+                        ? "_self"
+                        : "_blank"
+                    }
+                  >
+                    {Data.CtaButton ? Data.CtaButton.label : ""}
+                  </Link>
+                </div>
+              ) : (
+                <></>
+              )}
+            </>
+          ) : (
+            <></>
+          )} 
+
+          {/* {Data.CtaButton ? (
             <div className="cta_btn mt-2">
               <Link
                 rel="noopener noreferrer"
                 conversionDetails={conversionDetails_primaryCTA}
                 href={Data.CtaButton ? Data.CtaButton.link : "#"}
-                className="bg-[#001f46] text-white text-sm p-4 hover:bg-white border-solid border-2 border-[#001f46] mt-4"
+                className="bg-[#001f46] text-white text-sm p-4 hover:bg-white border-solid border-2 border-[#001f46] hover:text-[#001f46] mt-4"
               >
                 {Data.CtaButton ? Data.CtaButton.label : ""}
               </Link>
             </div>
           ) : (
             <></>
-          )}
+          )} */}
         </div>
       </div>
     </>

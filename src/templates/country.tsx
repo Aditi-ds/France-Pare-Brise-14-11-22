@@ -1,7 +1,7 @@
 import * as React from "react";
 import Footer from "../components/layouts/footer";
 import Header from "../components/layouts/header";
-// import Banner from "../components/banner";
+import Banner from "../components/locationDetails/banner";
 import BreadCrumbs from "../components/layouts/BreadCrumbs";
 import "../index.css";
  import bannerImage from "../images/francepare1.png";
@@ -33,6 +33,9 @@ export const config: TemplateConfig = {
       "description",
       "slug",
       "address",
+      "c_title",
+      " c_backgroundImage",
+      "c_primaryCTA",
       "c_metaTags",
       "c_ogMetaTag",
       "dm_directoryChildren.name",
@@ -168,7 +171,7 @@ const Country: Template<TemplateRenderProps> = ({
 }) => {
   const { description, dm_directoryChildren,address, dm_directoryParents, c_tagline } =
     document;
-  const { name } = document;
+  const { name, c_title, c_primaryCTA,  c_backgroundImage } = document;
  
   const childrenDivs = dm_directoryChildren.map((entity: any) => (
     <div className="contents w-1/2 md:w-1/3 lg:w-1/4 px-4 ">
@@ -194,12 +197,22 @@ const Country: Template<TemplateRenderProps> = ({
         address={address}
       ></BreadCrumbs>
 
-      <div className="hero">
-         <img className="heroBanner" src={bannerImage} alt=""/>
+    <Banner
+          Name={name}
+          TagLine={c_title}
+          CtaButton={c_primaryCTA}
+          // BackgroundImage={photoGallery?.image?.url}
+          BackgroundImage={
+            c_backgroundImage ? c_backgroundImage.url : bannerImage
+          }
+        />
+
+      {/* <div className="hero"> */}
+         {/* <img className="heroBanner" src={bannerImage} alt=""/> */}
          <div className="hero-content">
            <h1><strong> All Regions of {name}{" "}</strong></h1>
          </div>
-       </div>
+       {/* </div> */}
 
       <div className="centered-container h-64 min-h-[500px]"> 
       <h3 className="sec_heading mt-12 font-serif uppercase" style={{ textAlign: "center" }}>

@@ -6,9 +6,8 @@
   "source": "knowledgeGraph",
   "fields": [
     "name",
-    "c_menu",
-    "c_footerFPB",
-    "c_listing"
+    "c_menu"
+
 
   ],
   "localization": {

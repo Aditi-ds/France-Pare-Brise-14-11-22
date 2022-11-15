@@ -210,15 +210,16 @@ const NearByLocation = (entities: props) => {
                             <Phone phone={e.mainPhone} />
                           </div>
                           <div className="OpenCloseStatus" >
-        <a className={ " icon-row"} href="javascript:void(0);"   >
-          <div className="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="19.106" height="19.106" viewBox="0 0 19.106 19.106">
-              <path d="M170.493,161.44a9.053,9.053,0,1,0,9.053,9.053A9.058,9.058,0,0,0,170.493,161.44Zm.24.628a8.423,8.423,0,0,1,8.183,8.114h-1.45a.312.312,0,0,0,0,.624h1.45a8.423,8.423,0,0,1-8.183,8.112v-1.453h0a.312.312,0,0,0-.624,0v1.448a8.422,8.422,0,0,1-8.037-8.106h1.45a.312.312,0,0,0,0-.624h-1.45a8.423,8.423,0,0,1,8.037-8.109v1.448a.312.312,0,0,0,.624,0Zm-.311,3.14a.312.312,0,0,0-.313.313v5.434l-2.609,2.367a.313.313,0,0,0,.419.463l2.712-2.461h0a.312.312,0,0,0,.1-.231v-5.573a.312.312,0,0,0-.311-.313Z" transform="translate(-160.94 -160.94)" fill="#cc0c1f" stroke="#cc0c1f" stroke-width="1" fill-rule="evenodd" />
-            </svg>
-          </div>
-          <OpenCloseStatus timezone={e.timezone} hours={e.hours} deliveryHours={{}}></OpenCloseStatus></a>
-        {/* <div className={data.timeStatus + " daylist"} ><Hours key="" hours={data.hours} /></div> */}
-      </div>
+                            <a className={" icon-row"} href="javascript:void(0);"   >
+                              <div className="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="19.106" height="19.106" viewBox="0 0 19.106 19.106">
+                                  <path d="M170.493,161.44a9.053,9.053,0,1,0,9.053,9.053A9.058,9.058,0,0,0,170.493,161.44Zm.24.628a8.423,8.423,0,0,1,8.183,8.114h-1.45a.312.312,0,0,0,0,.624h1.45a8.423,8.423,0,0,1-8.183,8.112v-1.453h0a.312.312,0,0,0-.624,0v1.448a8.422,8.422,0,0,1-8.037-8.106h1.45a.312.312,0,0,0,0-.624h-1.45a8.423,8.423,0,0,1,8.037-8.109v1.448a.312.312,0,0,0,.624,0Zm-.311,3.14a.312.312,0,0,0-.313.313v5.434l-2.609,2.367a.313.313,0,0,0,.419.463l2.712-2.461h0a.312.312,0,0,0,.1-.231v-5.573a.312.312,0,0,0-.311-.313Z" transform="translate(-160.94 -160.94)" fill="#cc0c1f" stroke="#cc0c1f" stroke-width="1" fill-rule="evenodd" />
+                                </svg>
+                              </div>
+                              <OpenCloseStatus timezone={e.timezone} hours={e.hours} deliveryHours={{}}></OpenCloseStatus></a>
+                            {/* <div className={data.timeStatus + " daylist"} ><Hours key="" hours={data.hours} /></div> */}
+                          </div>
+                          
                           <div className="store-link flex flex-row space-x-4">
                             <Link
                               data-ya-track="directions"
@@ -231,7 +232,7 @@ const NearByLocation = (entities: props) => {
                               Obtenir des directions
                             </Link>
 
-                            <a className="view-details bg-[#001f46] text-white text-base p-2  hover:bg-white border-solid border-2 border-[#001f46] hover:text-[#001f46]" href={`/${e.slug}.html`}>
+                            <a className="view-details bg-[#001f46] text-white text-sm p-4 hover:bg-white border-solid border-2 border-[#001f46] hover:text-[#001f46] mt-4" href={`/${e.slug}.html`}>
                               Voir les détails
                             </a>
                           </div>
