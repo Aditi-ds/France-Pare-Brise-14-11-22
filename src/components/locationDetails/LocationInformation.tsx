@@ -19,6 +19,7 @@ type props = {
 };
 var LOCATION: any = null;
 var url: any = "";
+var link: any = "";
 var currentLatitude: any = 0.0;
 var currentLongitude: any = 0.0;
 const LocationInformation = (data: props) => {
@@ -93,9 +94,15 @@ const LocationInformation = (data: props) => {
                   <div className="store-address flex flex-row">
                     <Address address={data.address} />
                   </div>
+                  
                   <div className="store-phone flex flex-row">
-                    <Phone phone={data.phone} />
+                    {data.phone ? (
+                      <Phone phone={data.phone} />
+                    ) : (
+                      <></>
+                    )}
                   </div>
+
                   <div className="OpenCloseStatus" >
                     <p className={" icon-row"}>
                       <div className="icon">

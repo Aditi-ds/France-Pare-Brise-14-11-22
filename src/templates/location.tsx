@@ -25,8 +25,8 @@ import Example from "../components/locationDetails/menu";
 import "../types/i18n.tsx";
 import { formatPhoneNumber, formatPhoneNumberIntl } from 'react-phone-number-input';
 import "../index.css";
+import { JsonLd } from "react-schemaorg";
 import { useState } from 'react';
-
 import Service from "../components/locationDetails/service";
 import { Tabs, TabList, Tab, TabPanel } from '@zendeskgarden/react-tabs';
 import {
@@ -40,8 +40,9 @@ import {
   GetHeadConfig,
   HeadConfig,
 } from "@yext/pages";
-// import { stagingBaseUrl } from "../constants";
+import { stagingBaseUrl } from "../config/globalConfig";
 
+var link: any = "";
 var currentUrl = "";
 export const config: TemplateConfig = {
   stream: {
@@ -76,6 +77,9 @@ export const config: TemplateConfig = {
       "paymentOptions",
       "geocodedCoordinate",
       "c_appointment",
+      "c_facebook",
+      "c_instagram",
+      "c_linkedin",
       "c_servicesfrance.c_categoryType",
       "c_servicesfrance.name",
       "c_servicesfrance.slug",
@@ -133,14 +137,14 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({ relativePref
           rel: "icon",
           type: "image/x-icon",
           href: favicon,
-          
+
         },
       },
       {
         type: "meta",
         attributes: {
           name: "description",
-          content: `${document.description ? document.description : ""
+          content: `${document.c_metaTags.description ? document.c_metaTags.description : ""
             }`,
         },
       },
@@ -175,7 +179,7 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({ relativePref
         attributes: {
           rel: "canonical",
           href:
-            "https://master-unlovely--lurch--evoke-sbx-pgsdemo-com.sbx.preview.pagescdn.com/"+
+            "https://master-unlovely--lurch--evoke-sbx-pgsdemo-com.sbx.preview.pagescdn.com/" +
             ` ${document.c_canonical ? document.c_canonical : ""}`,
         },
       },
@@ -277,7 +281,11 @@ const Location: Template<ExternalApiRenderData> = ({
     name,
     _site,
     c_menu,
+    link,
     address,
+    c_facebook,
+    c_instagram,
+    c_linkedin,
     description,
     neighborhood,
     openTime,
@@ -311,50 +319,158 @@ const Location: Template<ExternalApiRenderData> = ({
   const [time, setTime] = React.useState({});
   const [delHours, setDelHours] = React.useState({});
   const [closingTime, setClosingTime] = React.useState("");
-
   const [selectedTab, setSelectedTab] = useState('tab-1');
+
+
+  document.siteDomain = "pagescdn.com";
+  let templateData = { document: document, __meta: __meta };
+  let hoursSchema = [];
+  let breadcrumbScheme = [];
+
+  if (hours) {
+    for (var key in hours) {
+      if (hours.hasOwnProperty(key)) {
+        let openIntervalsSchema: any = "";
+        if (key !== "holidayHours") {
+          if (hours[key].isClosed) {
+            openIntervalsSchema = {
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: key,
+            };
+          } else {
+            let end = "";
+            let start = "";
+            if (typeof hours[key].openIntervals != "undefined") {
+              let openIntervals = hours[key].openIntervals;
+              for (var o in openIntervals) {
+                if (openIntervals.hasOwnProperty(o)) {
+                  end = openIntervals[o].end;
+                  start = openIntervals[o].start;
+                }
+              }
+            }
+            openIntervalsSchema = {
+              "@type": "OpeningHoursSpecification",
+              closes: end,
+              dayOfWeek: key,
+              opens: start,
+            };
+          }
+        } else {
+        }
+
+        hoursSchema.push(openIntervalsSchema);
+      }
+    }
+  }
+
+  dm_directoryParents &&
+    dm_directoryParents.map((i: any, index: any) => {
+      if (index != 0) {
+        breadcrumbScheme.push({
+          "@type": "ListItem",
+          position: index,
+          item: {
+            "@id":  `${stagingBaseUrl}/${i.slug}`,
+            name: i.name,
+          },
+        });
+      }
+    });
+  let url = "";
+  let Name: any = document.name.toLowerCase();
+  let string: any = Name.toString();
+  let removeSpecialCharacters = string.replace(
+    /[&\/\\#^+()$~%.'":*?<>{}!@]/g,
+    ""
+  );
+  let result: any = removeSpecialCharacters.replaceAll("  ", "-");
+  let finalString: any = result.replaceAll(" ", "-");
+  if (!document.slug) {
+    url = `${document.id}-${result}.html`;
+  } else {
+    url = `${document.slug.toString()}.html`;
+  }
+
+  breadcrumbScheme.push({
+    "@type": "ListItem",
+    position: 4,
+    item: {
+      "@id": `${stagingBaseUrl}/${url}`,
+      name: document.name,
+    },
+  });
   return (
     <>
+
+      <JsonLd<location>
+        item={{
+          "@context": "https://schema.org",
+          "@type": "organization",
+          name: "France Pare Brise",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: address.line1,
+            addressLocality: address.city,
+            addressRegion: address.region,
+            postalCode: address.postalCode,
+            addressCountry: address.countryCode,
+          },
+          // openingHoursSpecification: hours ? hoursSchema : [],
+        }}
+      />
+      <JsonLd<BreadcrumbList>
+        item={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+
+          itemListElement: breadcrumbScheme,
+        }}
+      />
+
       <Header c_menu={_site.c_menu} />
-        <Banner
-          Name={name}
-          TagLine={c_title}
-          CtaButton={c_primaryCTA}
-          // BackgroundImage={photoGallery?.image?.url}
-          BackgroundImage={
-            c_backgroundImage ? c_backgroundImage.url : bannerImage
-          }
-        />
-        <BreadCrumbs
-          name={name}
-          parents={dm_directoryParents}
-          baseUrl={relativePrefixToRoot}
-          address={address}
-        ></BreadCrumbs>
-        <div>
-          <div className="grid grid-cols-3 gap-4 mr-6 mt-6">
-            <LocationInformation
-              prop={hours}
-              coords={yextDisplayCoordinate}
-              address={address}
-              phone={mainPhone}
-              hours={hours}
-              timezone={timezone}
-              c_appointment={c_appointment.label}
-            />
-             <div ><Hours title="Hours" hours={hours} /></div> 
-         <div> <CustomMap prop={yextDisplayCoordinate} /></div>  
-          </div>
+      <Banner
+        Name={name}
+        TagLine={c_title}
+        CtaButton={c_primaryCTA}
+        // BackgroundImage={photoGallery?.image?.url}
+        BackgroundImage={
+          c_backgroundImage ? c_backgroundImage.url : bannerImage
+        }
+        c_facebook={c_facebook}
+        c_instagram={c_instagram}
+        c_linkedin={c_linkedin}
+      />
+      <BreadCrumbs
+        name={name}
+        parents={dm_directoryParents}
+        baseUrl={relativePrefixToRoot}
+        address={address}
+      ></BreadCrumbs>
+      <div>
+        <div className="grid grid-cols-3 gap-4 mr-6 mt-6">
+          <LocationInformation
+            prop={hours}
+            coords={yextDisplayCoordinate}
+            address={address}
+            phone={mainPhone}
+            hours={hours}
+            timezone={timezone}
+            c_appointment={c_appointment.label}
+          />
+          <div ><Hours title="Hours" hours={hours} /></div>
+          <div> <CustomMap prop={yextDisplayCoordinate} /></div>
         </div>
-        {c_aboutSection.title ? (
-          <About c_aboutSection={c_aboutSection}/>
-        ) : (
-          <></>
-        )}
-    
-        <Service servicefrance={c_servicesfrance}></Service>
-        {/* service */}
-        {/* <section className="text-#000 text-center mt-4">
+      </div>
+      {c_aboutSection.title ? (
+        <About c_aboutSection={c_aboutSection} />
+      ) : (
+        <></>
+      )}
+
+      <Service servicefrance={c_servicesfrance}></Service>
+      {/* service */}
+      {/* <section className="text-#000 text-center mt-4">
           <h2 className="text-3xl font-bold text-[#001f46]">{"Services proposés"}</h2>
           <div className="grid grid-cols-2 gap-4 mb-7">
             <div>
@@ -367,16 +483,16 @@ const Location: Template<ExternalApiRenderData> = ({
             </div>
           </div>
         </section> */}
-        {/* end */}
-        <NearByLocation
-          prop={externalApiData}
-          baseUrl={relativePrefixToRoot}
-          coords={yextDisplayCoordinate}
-          slug={document.slug} />
-        <div className="text-center mt-4 ">
-          <Cta buttonText={c_bannerButton.label} url={c_bannerButton.link}></Cta>
-        </div>
-        {/* <Footer Footer={_site.c_footerFPB} /> */}
+      {/* end */}
+      <NearByLocation
+        prop={externalApiData}
+        baseUrl={relativePrefixToRoot}
+        coords={yextDisplayCoordinate}
+        slug={document.slug} />
+      <div className="text-center mt-4 ">
+        <Cta buttonText={c_bannerButton.label} url={c_bannerButton.link}></Cta>
+      </div>
+      <Footer />
       {/* </PageLayout> */}
     </>
   );

@@ -18,6 +18,9 @@ export const entityTypes = "location";
 
 export const locale ="fr";
 
+export const stagingBaseUrl =
+  "https://master-unlovely--lurch--evoke-sbx-pgsdemo-com.sbx.preview.pagescdn.com/";
+
 export const googleMapsConfig =  {
     centerLatitude: 48.864716, 
     centerLongitude:2.349014,

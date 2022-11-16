@@ -227,7 +227,7 @@ const State: Template<TemplateRenderProps> = ({
         address={{}}
       ></BreadCrumbs>
 
-      <Banner
+      {/* <Banner
         Name={name}
         TagLine={c_title}
         CtaButton={c_primaryCTA}
@@ -235,7 +235,7 @@ const State: Template<TemplateRenderProps> = ({
         BackgroundImage={
           c_backgroundImage ? c_backgroundImage.url : bannerImage
         }
-      />
+      /> */}
 
       {/* <div className="hero">
         <img className="heroBanner" src={bannerImage} alt="" /> */}
