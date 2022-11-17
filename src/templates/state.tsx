@@ -33,6 +33,9 @@ export const config: TemplateConfig = {
       "id",
       "uid",
       "meta",
+      "c_facebook",
+      "c_instagram",
+      "c_linkedin",
       "address",
       "name",
       "description",
@@ -179,6 +182,9 @@ const State: Template<TemplateRenderProps> = ({
     c_title,
     c_primaryCTA,
     c_backgroundImage,
+    c_facebook,
+    c_instagram,
+    c_linkedin,
     description,
     address,
     dm_directoryParents,
@@ -227,7 +233,7 @@ const State: Template<TemplateRenderProps> = ({
         address={{}}
       ></BreadCrumbs>
 
-      {/* <Banner
+      <Banner
         Name={name}
         TagLine={c_title}
         CtaButton={c_primaryCTA}
@@ -235,7 +241,10 @@ const State: Template<TemplateRenderProps> = ({
         BackgroundImage={
           c_backgroundImage ? c_backgroundImage.url : bannerImage
         }
-      /> */}
+        c_facebook={c_facebook}
+        c_instagram={c_instagram}
+        c_linkedin={c_linkedin}
+      />
 
       {/* <div className="hero">
         <img className="heroBanner" src={bannerImage} alt="" /> */}

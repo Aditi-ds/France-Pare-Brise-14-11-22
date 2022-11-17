@@ -75,7 +75,7 @@ const Banner = (Data: props) => {
             <></>
           )}
 
-          <div className="flex flex-row">
+          <div className="flex flex-row ml-12">
             <div className="w-10">
               {Data.c_facebook?.link ? (
                 <>
@@ -125,18 +125,17 @@ const Banner = (Data: props) => {
                       />
                     </svg>
                   </a>
-
                 </>
               ) : (
                 <></>
               )}
             </div>
 
-          <div className="w-10">
-            {Data.c_linkedin?.link ? (
-              <>
-                <li>
-                <a
+            <div className="w-10">
+              {Data.c_linkedin?.link ? (
+                <>
+
+                  <a
                     href={
                       Data.c_linkedin.link
                         ? Data.c_linkedin.link
@@ -157,14 +156,12 @@ const Banner = (Data: props) => {
                       />
                     </svg>
                   </a>
-                </li>
-              </>
-            ) : (
-              <></>
-            )}
-          </div>  
 
-
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
           </div>
         </div>
 
